@@ -1,0 +1,59 @@
+$dividerColor: #DDD;
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.month {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.headers {
+    display: flex;
+    border-bottom: 1px solid $dividerColor;
+}
+
+.header {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+}
+
+.dates {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.date-row {
+    flex: 1;
+    display: flex;
+    border-bottom: 1px solid $dividerColor;
+    &:last-child {
+        border-bottom: 0;
+    }
+}
+
+.date-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid $dividerColor;
+    &:last-child {
+        border-right: 0;
+    }
+}
+
+.date {
+    padding: 5px;
+}
+
+.events {
+    flex: 1;
+}
+
+
