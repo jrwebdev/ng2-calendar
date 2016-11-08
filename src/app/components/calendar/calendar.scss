@@ -1,4 +1,4 @@
-$dividerColor: #DDD;
+$colorDivider: #DDD;
 
 .calendar {
     display: flex;
@@ -6,18 +6,51 @@ $dividerColor: #DDD;
     height: 100%;
 }
 
-.month {
+.month-header {
+    display: flex;
+    border-bottom: 1px solid $colorDivider;
+}
+
+.prev,
+.next {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 50px;
+    height: 50px;
+    text-decoration: none;
+    color: #000;
+
+    &:hover {
+        background-color: #EEE;
+    }
 }
 
-.headers {
+.prev {
+    border-right: 1px solid $colorDivider;
+}
+
+.next {
+    border-left: 1px solid $colorDivider;
+}
+
+.month {
     display: flex;
-    border-bottom: 1px solid $dividerColor;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
 }
 
-.header {
+.date-headers {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    border-bottom: 1px solid $colorDivider;
+}
+
+.date-header {
     flex: 1;
     text-align: center;
     font-weight: bold;
@@ -32,7 +65,7 @@ $dividerColor: #DDD;
 .date-row {
     flex: 1;
     display: flex;
-    border-bottom: 1px solid $dividerColor;
+    border-bottom: 1px solid $colorDivider;
     &:last-child {
         border-bottom: 0;
     }
@@ -42,7 +75,7 @@ $dividerColor: #DDD;
     flex: 1;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid $dividerColor;
+    border-right: 1px solid $colorDivider;
     &:last-child {
         border-right: 0;
     }
@@ -50,6 +83,7 @@ $dividerColor: #DDD;
 
 .date {
     padding: 5px;
+    font-size: .8em;
 }
 
 .events {

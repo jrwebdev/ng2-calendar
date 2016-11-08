@@ -2,14 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 
+// TODO Features:
+// Angular 2 Material
+// Add Event modal
+// ngRx/store
+// Routing - update url with month + year, edit event
+// Firebase
+// Tests
+
+// TODO Issues:
+// Hot module reloading
+// Type checking for templates/properties
+
 @Component({
     selector: 'app-calendar',
     styleUrls: ['./calendar.scss'],
     template: `
         <div class="calendar">
-            <h2 class="month">{{month}}</h2>
-            <div class="headers">
-                <span *ngFor="let header of headers" class="header">{{header}}</span>
+            <div class="month-header">
+                <a href="#" class="prev" (click)="prev()">&lt;</a>
+                <h1 class="month">{{month}}</h1>
+                <a href="#" class="next" (click)="next()">&gt;</a>
+            </div>    
+            <div class="date-headers">
+                <span *ngFor="let header of headers" class="date-header">{{header}}</span>
             </div>
             <div class="dates">
                 <div *ngFor="let dateRow of dates" class="date-row">
@@ -25,14 +41,21 @@ import { Moment } from 'moment';
 export class CalendarComponent implements OnInit {
     
     viewDate: Moment = moment();
-    // TODO: Change to a calendar date interface
-    month: String = this.viewDate.format('MMMM') 
-    headers: String[] = [];
-    dates: String[][] = [];
+    month: String;
+    headers: String[];
+    // TODO: Change to a calendar date interface 
+    dates: String[][];
 
-    // TODO: Move to onChanges
-    ngOnInit() {
-        
+    ngOnInit(): void {
+        this.generateDates();
+    }
+
+    generateDates(): void {
+
+        this.month = this.viewDate.format('MMMM YYYY');
+        this.headers = [];
+        this.dates = [];
+
         const startDate: Moment = this.viewDate.clone().startOf('month').startOf('week');
         const endDate: Moment = this.viewDate.clone().endOf('month').endOf('week');
         const curDate: Moment = startDate.clone();
@@ -49,6 +72,19 @@ export class CalendarComponent implements OnInit {
             this.dates.push(dateRow);
         }
 
+    }
+
+    prev(): void {
+        this.changeMonth(-1);
+    }
+
+    next(): void {
+        this.changeMonth(1);
+    }
+
+    private changeMonth(delta: number): void {
+        this.viewDate = this.viewDate.add(delta, 'month');
+        this.generateDates();
     }
 
 }
