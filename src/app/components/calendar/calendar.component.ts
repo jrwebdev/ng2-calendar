@@ -20,9 +20,9 @@ import { Moment } from 'moment';
     template: `
         <div class="calendar">
             <div class="month-header">
-                <a href="#" class="prev" (click)="prev()">&lt;</a>
+                <a href="#" class="prev" (click)="prev($event)">&lt;</a>
                 <h1 class="month">{{month}}</h1>
-                <a href="#" class="next" (click)="next()">&gt;</a>
+                <a href="#" class="next" (click)="next($event)">&gt;</a>
             </div>    
             <div class="date-headers">
                 <span *ngFor="let header of headers" class="date-header">{{header}}</span>
@@ -74,11 +74,13 @@ export class CalendarComponent implements OnInit {
 
     }
 
-    prev(): void {
+    prev(e: Event): void {
+        e.preventDefault();
         this.changeMonth(-1);
     }
 
-    next(): void {
+    next(e: Event): void {
+        e.preventDefault();
         this.changeMonth(1);
     }
 
