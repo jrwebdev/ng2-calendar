@@ -3,9 +3,8 @@ import * as moment from 'moment';
 import { Moment } from 'moment';
 
 // TODO Features:
-// Angular 2 Material
-// Add Event modal
 // ngRx/store
+// Add Event modal
 // Routing - update url with month + year, edit event
 // Firebase
 // Tests
@@ -20,9 +19,13 @@ import { Moment } from 'moment';
     template: `
         <div class="calendar">
             <div class="month-header">
-                <a href="#" class="prev" (click)="prev($event)">&lt;</a>
+                <a href="#" class="prev" (click)="prev($event)">
+                    <md-icon class="md-24">keyboard_arrow_left</md-icon>
+                </a>
                 <h1 class="month">{{month}}</h1>
-                <a href="#" class="next" (click)="next($event)">&gt;</a>
+                <a href="#" class="next" (click)="next($event)">
+                    <md-icon class="md-24">keyboard_arrow_right</md-icon>
+                </a>
             </div>    
             <div class="date-headers">
                 <span *ngFor="let header of headers" class="date-header">{{header}}</span>
