@@ -1,4 +1,10 @@
-<app-calendar></app-calendar>
-<button md-fab class="add">
+
+<app-calendar [events]="events"></app-calendar>
+
+<app-dialog *ngIf="isAddingEvent">
+    <app-event-form (add)="addEvent($event)" (cancel)="cancelAddEvent()"></app-event-form>
+</app-dialog>
+
+<button md-fab class="add" (click)="openAddEvent()">
     <md-icon class="md-24">add</md-icon>
 </button>

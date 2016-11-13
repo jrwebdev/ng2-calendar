@@ -43,6 +43,10 @@ $colorDivider: #DDD;
     padding: 0;
 }
 
+.outside-month {
+    color: #CCC;
+}
+
 .date-headers {
     display: flex;
     align-items: center;
@@ -87,6 +91,28 @@ $colorDivider: #DDD;
 }
 
 .events {
+    flex: 1;
+    overflow: auto;
+}
+
+.event {
+    display: flex;
+    font-size: 0.8em;
+    padding: 0 5px;
+    margin-bottom: 3px;
+}
+
+.event-time {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+
+// TODO: Fix text ellipsis
+.event-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     flex: 1;
 }
 

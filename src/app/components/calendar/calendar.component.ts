@@ -1,17 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-
-// TODO Features:
-// ngRx/store
-// Add Event modal
-// Routing - update url with month + year, edit event
-// Firebase
-// Tests
-
-// TODO Issues:
-// Hot module reloading
-// Type checking for templates/properties
 
 @Component({
     selector: 'app-calendar',
@@ -32,28 +21,48 @@ import { Moment } from 'moment';
             </div>
             <div class="dates">
                 <div *ngFor="let dateRow of dates" class="date-row">
-                    <div *ngFor="let date of dateRow" class="date-container">
-                        <span class="date">{{date}}</span>
-                        <div class="events"></div>
+                    <div *ngFor="let date of dateRow" class="date-container" [ngClass]="{'outside-month': date.isOutsideMonth}">
+                        <span class="date">{{date.display}}</span>
+                        <div class="events">
+                            <div *ngFor="let event of date.events" class="event">
+                                <span class="event-time">{{event.datetime | date:'HH:mm'}}</span>
+                                <span class="event-title">{{event.title}}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>    
     `
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnChanges {
+
+    // TODO: Event interface
+    @Input() events: any[] = [];
     
     viewDate: Moment = moment();
     month: String;
     headers: String[];
     // TODO: Change to a calendar date interface 
-    dates: String[][];
+    dates: any[][];
 
-    ngOnInit(): void {
+    ngOnChanges(changes) {
+        // TODO: Check for changes
         this.generateDates();
     }
 
-    generateDates(): void {
+    generateDates() {
+
+        // TODO: Pass in current date + events for the month instead
+        // TODO: Sort - move to calendar day component
+        const events = this.events.reduce((monthEvents, event) => {
+            if (this.viewDate.isSame(event.datetime, 'month')) {
+                const day = moment(event.datetime).format('D');
+                const dayEvents = monthEvents[day] || [];
+                monthEvents[day] = [...dayEvents, event];
+            }
+            return monthEvents;
+        }, {});
 
         this.month = this.viewDate.format('MMMM YYYY');
         this.headers = [];
@@ -64,12 +73,23 @@ export class CalendarComponent implements OnInit {
         const curDate: Moment = startDate.clone();
         
         while (curDate.isSameOrBefore(endDate, 'day')) {
-            let dateRow: String[] = [];
+            let dateRow: any[] = [];
             for (let i = 0; i < 7; i++) {
+                
+                const date: any = {};
+
                 if (this.headers.length < 7) {
-                    this.headers.push(curDate.clone().format('ddd'));
+                    this.headers.push(curDate.format('ddd'));
                 }
-                dateRow.push(curDate.clone().format('DD'));
+
+                date.display = curDate.format('DD');
+                if (this.viewDate.isSame(curDate, 'month')) {
+                    date.events = events[curDate.format('D')] || []; 
+                } else {
+                    date.isOutsideMonth = true;
+                }
+
+                dateRow.push(date);
                 curDate.add(1, 'day');
             }
             this.dates.push(dateRow);
@@ -77,17 +97,17 @@ export class CalendarComponent implements OnInit {
 
     }
 
-    prev(e: Event): void {
+    prev(e: Event) {
         e.preventDefault();
         this.changeMonth(-1);
     }
 
-    next(e: Event): void {
+    next(e: Event) {
         e.preventDefault();
         this.changeMonth(1);
     }
 
-    private changeMonth(delta: number): void {
+    private changeMonth(delta: number) {
         this.viewDate = this.viewDate.add(delta, 'month');
         this.generateDates();
     }
