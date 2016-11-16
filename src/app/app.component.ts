@@ -5,10 +5,11 @@ import {addEvent, openAddEvent, closeAddEvent} from './state/event';
 
 // TODO Features:
 // Persist events
+// Key press events for next/prev
 // Interfaces/types
+// Tests
 // Routing - update url with month + year, edit event
 // Firebase
-// Tests
 // Form validation/parsing
 // i18n
 
@@ -27,6 +28,11 @@ export class AppComponent {
   private isAddingEvent: boolean;
   private events: any[] = [];
 
+  private name: string = "John";
+  private age: number = 30;
+  private city: string = "New York";
+  private favouriteColor: string = "Blue";
+
   constructor(private store: Store<any>) {
     
     this.eventStore = store.select('event');
@@ -38,6 +44,10 @@ export class AppComponent {
       this.isAddingEvent = event.isAddingEvent;
     });
 
+  }
+
+  showClicks(clicks: number) {
+    console.log(clicks.toString(), typeof clicks);
   }
 
   openAddEvent() {

@@ -1,4 +1,16 @@
+<div>City: {{city}}</div>
+<app-example
+    name="{{name}}"
+    [age]="age"
+    [city]="city"
+    favouriteColor="Green"
+    (buttonClick)="showClicks($event)">
+</app-example>
 
+<button (click)="name = 'Fred'">Change Name</button>
+<button (click)="city = 'London'">Change City</button>
+
+<!--
 <app-calendar [events]="events"></app-calendar>
 
 <app-dialog *ngIf="isAddingEvent">
@@ -8,3 +20,4 @@
 <button md-fab class="add" (click)="openAddEvent()">
     <md-icon class="md-24">add</md-icon>
 </button>
+-->

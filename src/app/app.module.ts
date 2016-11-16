@@ -7,6 +7,8 @@ import { StoreModule } from '@ngrx/store';
 
 import 'hammerjs'; // Needed for Angular Material
 
+import { ExampleComponent } from './components/example/example.component';
+
 import { AppComponent } from './app.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { DialogComponent } from './components/dialog/dialog.component';
@@ -16,6 +18,7 @@ import eventReducer from './state/event';
 
 @NgModule({
   declarations: [
+    ExampleComponent,
     AppComponent,
     CalendarComponent,
     DialogComponent,
